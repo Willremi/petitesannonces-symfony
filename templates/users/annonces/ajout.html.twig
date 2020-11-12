@@ -1,0 +1,36 @@
+{% extends 'users.html.twig' %}
+
+{% block title %}Ajouter une annonce{% endblock %}
+
+{% block body %}
+    {% if app.request.attributes.get('_route') == 'users_annonces_modif' %}
+    <h1>Modifier une annonce</h1>
+{% else %}
+    <h1>Ajouter une annonce</h1>
+{% endif %}
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form.categories) }}
+        <br>
+        {{ form_row(form.images) }}
+        <br>
+        {# Si la route est "annonces_modif on affiche les images #}
+	{% if app.request.attributes.get('_route') == 'users_annonces_modif' %}
+        <h2>Images</h2>
+        {% for image in annonce.images %}
+            <div>
+                <img src="{{ asset('/uploads/images/'~image.name) }}" alt="" width="150">
+
+                {# On ajoute un lien permettant de supprimer une image (sera géré en Ajax) #}
+                <a href="{{ path('annonces_delete_image', {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {{ form_end(form) }}
+    <br>
+    
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/images.js') }}"></script>
+{% endblock %}

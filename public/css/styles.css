@@ -1,0 +1,18 @@
+.primary {
+    background-color: red;
+}
+
+a.dropdown-item:hover {
+    color: white !important;
+    background-color: red !important;
+}
+
+#square {
+    width: 400px;
+}
+
+#banniere {
+    width: 800px;
+    height: 400px;
+    text-align: center;
+}

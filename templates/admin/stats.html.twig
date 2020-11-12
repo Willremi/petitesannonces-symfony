@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Statistiques</h1>
+
+    <h3>Nombre d'annonces par catégorie</h3>
+    <canvas id="categories" width="400" height="100"></canvas>
+    
+    <h3>Nombre d'annonces par jour</h3>
+    <canvas id="annonces" width="400" height="100"></canvas>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script>
+    let categories = document.querySelector("#categories")
+    let categGraph = new Chart(categories, {
+        type: "pie",
+        data: {
+            labels: {{ categNom|raw }},
+            datasets: [{
+                label: "Répartition des catégories",
+                data: {{ categCount|raw }},
+                backgroundColor: {{ categColor|raw }}
+            }]
+        }
+    })
+
+    let annonces = document.querySelector("#annonces")
+    let annGraph = new Chart(annonces, {
+        type: "bar", 
+        data: {
+            labels: {{ dates|raw }}, 
+            datasets: [{
+                label: "Nombre d'annonces", 
+                data: {{ annoncesCount|raw }}
+            }]
+        }, 
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+    </script>
+{% endblock %}
