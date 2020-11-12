@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class AnnoncesType extends AbstractType
 {
@@ -25,6 +26,7 @@ class AnnoncesType extends AbstractType
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false, 
+                
             ])
             ->add('content', CKEditorType::class)
             ->add('categories', EntityType::class, [
